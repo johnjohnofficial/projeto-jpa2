@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,6 +33,7 @@ public class ProdutoDao {
 
 	public Produto getProduto(Integer id) {
 		Produto produto = em.find(Produto.class, id);
+//		em.lock(produto, LockModeType.PESSIMISTIC_WRITE);
 		return produto;
 	}
 
