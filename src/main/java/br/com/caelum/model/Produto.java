@@ -11,11 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@NamedEntityGraphs({
+	@NamedEntityGraph(name = "produtoComCategoria",
+						attributeNodes = {
+								@NamedAttributeNode("categorias")
+						})
+})
+
+//Com está anotação apenas só os atributos alteradores será persistido no banco
+@DynamicUpdate(true)
 @Entity
 public class Produto {
 
@@ -52,11 +65,11 @@ public class Produto {
 	
 	//método auxiliar para associar categorias com o produto
 	//se funcionar apos ter definido o relacionamento entre produto e categoria
-//	public void adicionarCategorias(Categoria... categorias) {
-//		for (Categoria categoria : categorias) {
-//			this.categorias.add(categoria);
-//		}
-//	}
+	public void adicionarCategorias(Categoria... categorias) {
+		for (Categoria categoria : categorias) {
+			this.categorias.add(categoria);
+		}
+	}
 
 	public String getLinkDaFoto() {
 		return linkDaFoto;

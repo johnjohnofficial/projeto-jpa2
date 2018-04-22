@@ -24,7 +24,10 @@ public class ProdutoDao {
 	private EntityManager em;
 
 	public List<Produto> getProdutos() {
-		return em.createQuery("from Produto", Produto.class).getResultList();
+//		return em.createQuery("from Produto", Produto.class).getResultList();
+		return em.createQuery("select distinct p from Produto p ", Produto.class)
+				.setHint("javax.persistence.loadgraph", em.getEntityGraph("produtoComCategoria"))
+				.getResultList();
 	}
 
 	public Produto getProduto(Integer id) {
